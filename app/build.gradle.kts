@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
+     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.0"
+
 }
 
 android {
@@ -61,8 +63,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Compose
-    implementation("androidx.navigation:navigation-compose:2.7.0")
+    // Compose Navigation - Type Safe
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     // Hilt for Dependency Injection
