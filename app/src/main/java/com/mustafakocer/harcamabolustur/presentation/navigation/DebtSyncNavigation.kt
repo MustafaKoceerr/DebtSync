@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.mustafakocer.harcamabolustur.presentation.auth.LoginScreen
+import com.mustafakocer.harcamabolustur.presentation.groups.GroupsListScreen
 import com.mustafakocer.harcamabolustur.presentation.splash.SplashScreen
 
 @Composable
@@ -38,10 +39,10 @@ fun DebtSyncNavigation(navController: NavHostController) {
         ) {
             composable<LoginRoute> {
                 // TODO: LoginScreen implementation
-                 LoginScreen(
-                     onNavigateToRegister = { navController.navigate(RegisterRoute) },
-                     onNavigateToMain = { navController.navigate(MainGraph) }
-                 )
+                LoginScreen(
+                    onNavigateToRegister = { navController.navigate(RegisterRoute) },
+                    onNavigateToMain = { navController.navigate(MainGraph) }
+                )
             }
 
             composable<RegisterRoute> {
@@ -58,12 +59,11 @@ fun DebtSyncNavigation(navController: NavHostController) {
             startDestination = GroupsListRoute
         ) {
             composable<GroupsListRoute> {
-                // TODO: GroupsListScreen implementation
-                // GroupsListScreen(
-                //     onNavigateToGroupDetail = { groupId ->
-                //         navController.navigate(GroupDetailRoute(groupId))
-                //     }
-                // )
+                GroupsListScreen(
+                    onNavigateToGroupDetail = { groupId ->
+                        navController.navigate(GroupDetailRoute(groupId))
+                    }
+                )
             }
 
             composable<GroupDetailRoute> { navBackStackEntry ->
