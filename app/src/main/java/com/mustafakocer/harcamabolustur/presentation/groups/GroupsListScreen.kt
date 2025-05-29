@@ -1,13 +1,16 @@
 package com.mustafakocer.harcamabolustur.presentation.groups
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mustafakocer.harcamabolustur.ui.theme.DebtSyncTheme
 
 @Composable
 fun GroupsListScreen(
@@ -34,7 +36,7 @@ fun GroupsListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO: Create group Dialog/Screen
+                    // TODO: Create Group Dialog/Screen
                 }
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Group")
@@ -81,7 +83,6 @@ fun GroupsListScreen(
                 }
             }
         }
-
     }
 }
 
@@ -90,26 +91,30 @@ private fun GroupItem(
     groupName: String,
     onClick: () -> Unit
 ) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = groupName,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "3 members * 5 expenses" ,// TODO : Real data
-            style = MaterialTheme.typography.bodySmall
-        )
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = groupName,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = "3 members • 5 expenses", // TODO: Real data
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun GroupsListScreenPreview() {
-    DebtSyncTheme {
-        GroupsListScreen(
-            onNavigateToGroupDetail = {}
-        )
-    }
-
+fun GroupsListScreenPreview() {
+    GroupsListScreen(
+        onNavigateToGroupDetail = {}
+    )
 }
