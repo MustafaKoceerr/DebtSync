@@ -14,6 +14,7 @@ import com.mustafakocer.harcamabolustur.presentation.navigation.DebtSyncNavigati
 import com.mustafakocer.harcamabolustur.ui.theme.DebtSyncTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
