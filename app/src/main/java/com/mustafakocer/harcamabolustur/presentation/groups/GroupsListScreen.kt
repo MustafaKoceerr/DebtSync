@@ -18,25 +18,25 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.mustafakocer.harcamabolustur.domain.model.Group
 
 @Composable
 fun GroupsListScreen(
-    onNavigateToGroupDetail: (String) -> Unit
+    onNavigateToGroupDetail: (String) -> Unit,
+    viewModel: GroupsViewModel = hiltViewModel()
 ) {
-    // TODO: ViewModel'den gelecek
-    val sampleGroups = listOf(
-        "Ev Arkadaşları",
-        "Tatil Grubu",
-        "Ofis Yemekleri"
-    )
+
+    val groups = viewModel.groups.collectAsLazyPagingItems()
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO: Create Group Dialog/Screen
+                    // Test için grup oluştur
+                    viewModel.createTestGroup()
                 }
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Group")
@@ -50,12 +50,12 @@ fun GroupsListScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Your Groups",
+                text = "Your Groups (${groups.itemCount})",
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            if (sampleGroups.isEmpty()) {
+            if (groups.itemCount == 0) {
                 // Empty state
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -66,7 +66,7 @@ fun GroupsListScreen(
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
-                        text = "Create your first group to start tracking expenses",
+                        text = "Tap + to create your first group",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -74,11 +74,15 @@ fun GroupsListScreen(
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(sampleGroups) { groupName ->
-                        GroupItem(
-                            groupName = groupName,
-                            onClick = { onNavigateToGroupDetail("fake_id") }
-                        )
+                    items(count = groups.itemCount) { index ->
+                        val group = groups[index]
+                        group?.let {
+                            GroupItem(
+                                group = it,
+                                onClick = { onNavigateToGroupDetail(it.id) }
+                            )
+                        }
+
                     }
                 }
             }
@@ -88,7 +92,7 @@ fun GroupsListScreen(
 
 @Composable
 private fun GroupItem(
-    groupName: String,
+    group: Group,
     onClick: () -> Unit
 ) {
     Card(
@@ -100,21 +104,21 @@ private fun GroupItem(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = groupName,
+                text = group.name,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "3 members • 5 expenses", // TODO: Real data
+                text = "${group.currency} • Code: ${group.inviteCode}",
                 style = MaterialTheme.typography.bodySmall
             )
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GroupsListScreenPreview() {
-    GroupsListScreen(
-        onNavigateToGroupDetail = {}
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GroupsListScreenPreview() {
+//    GroupsListScreen(
+//        onNavigateToGroupDetail = {}
+//    )
+//}
