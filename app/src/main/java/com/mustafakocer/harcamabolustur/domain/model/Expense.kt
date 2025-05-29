@@ -1,12 +1,13 @@
 package com.mustafakocer.harcamabolustur.domain.model
 
+// ============ EXPENSE MODELS ============
 data class Expense(
     val id: String,
     val groupId: String,
     val title: String,
     val totalAmount: Double,
     val currency: String,
-    val createBy: String,
+    val createdBy: String,
     val createdByUser: User, // Join edilmiş user
     val createdAt: Long,
     val category: String? = null,

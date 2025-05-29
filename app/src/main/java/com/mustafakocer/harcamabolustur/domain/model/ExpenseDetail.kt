@@ -1,8 +1,5 @@
 package com.mustafakocer.harcamabolustur.domain.model
 
-import android.icu.util.Currency
-import retrofit2.http.Url
-
 // Expense detail (create/edit için)
 data class ExpenseDetail(
     val id: String,

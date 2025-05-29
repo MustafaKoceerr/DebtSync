@@ -1,7 +1,5 @@
 package com.mustafakocer.harcamabolustur.domain.model
 
-import android.icu.util.Currency
-
 // ============ GROUP MODEL ============
 data class Group(
     val id: String,
@@ -13,5 +11,5 @@ data class Group(
     val createdAt: Long = System.currentTimeMillis(),
     val currency: String = "TRY",
     val memberCount: Int = 0, // UI için
-    val totalExpenses: Double = 0.0,
+    val totalExpenses: Double = 0.0 // UI için
 )
