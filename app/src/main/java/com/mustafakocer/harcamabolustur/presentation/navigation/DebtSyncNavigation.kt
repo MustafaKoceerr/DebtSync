@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.mustafakocer.harcamabolustur.presentation.auth.LoginScreen
+import com.mustafakocer.harcamabolustur.presentation.expense.AddExpenseScreen
+import com.mustafakocer.harcamabolustur.presentation.groups.GroupDetailScreen
 import com.mustafakocer.harcamabolustur.presentation.groups.GroupsListScreen
 import com.mustafakocer.harcamabolustur.presentation.splash.SplashScreen
 
@@ -32,16 +34,18 @@ fun DebtSyncNavigation(navController: NavHostController) {
             )
         }
 
-
         // AUTH GRAPH
         navigation<AuthGraph>(
             startDestination = LoginRoute
         ) {
             composable<LoginRoute> {
-                // TODO: LoginScreen implementation
                 LoginScreen(
                     onNavigateToRegister = { navController.navigate(RegisterRoute) },
-                    onNavigateToMain = { navController.navigate(MainGraph) }
+                    onNavigateToMain = {
+                        navController.navigate(MainGraph) {
+                            popUpTo(AuthGraph) { inclusive = true }
+                        }
+                    }
                 )
             }
 
@@ -68,25 +72,22 @@ fun DebtSyncNavigation(navController: NavHostController) {
 
             composable<GroupDetailRoute> { navBackStackEntry ->
                 val args = navBackStackEntry.toRoute<GroupDetailRoute>()
-                // TODO: GroupDetailScreen implementation
-                // GroupDetailScreen(
-                //     groupId = args.groupId,
-                //     onNavigateToAddExpense = { groupId ->
-                //         navController.navigate(AddExpenseRoute(groupId))
-                //     }
-                // )
+                GroupDetailScreen(
+                    groupId = args.groupId,
+                    onNavigateToAddExpense = { groupId ->
+                        navController.navigate(AddExpenseRoute(groupId))
+                    },
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
 
             composable<AddExpenseRoute> { navBackStackEntry ->
                 val args = navBackStackEntry.toRoute<AddExpenseRoute>()
-                // TODO: AddExpenseScreen implementation
-                // AddExpenseScreen(
-                //     groupId = args.groupId,
-                //     onNavigateBack = { navController.popBackStack() }
-                // )
+                AddExpenseScreen(
+                    groupId = args.groupId,
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
-
         }
     }
-
 }
